@@ -1,0 +1,63 @@
+.Panel {
+   font-family:Georgia;
+   background-image:url(background.png);
+   color: CadetBlue;
+}
+.Href
+{
+    color: CadetBlue;  }
+.Comments{
+    color: whitesmoke;
+    font-family:Georgia;
+    background-color: darkslategrey;
+}
+.AddCommentHref
+{
+   color: darkslategrey;
+   background-color: whitesmoke;
+}
+
+.TagHref
+{
+    color: darksalmon;
+    background-color: beige;
+}
+.Tags
+{
+    display: inline-block;
+    font-size: 25px;
+    background-color: darksalmon;
+}
+.News
+{
+    background-color: lightcyan;
+}
+h1 {
+  font-size: 3.5em;
+}
+.InteractivePanel{
+    height: 60px;
+    width: 150px;
+    border-radius: 5px;
+    background-color: azure ;
+    text-align: center;
+    font-family: Verdana, Arial, Sans-Serif;
+    opacity: 1;
+	display: inline-block;
+	font-size:25px;
+}
+.ProfileData
+{
+    background-color: darksalmon;
+}
+.Comments_Tags
+{
+    background-color: azure ;
+}
+.tags{
+    color:darkslategrey;
+}
+.Message
+{
+    font-size: 30px;
+}

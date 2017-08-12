@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block news %}
+<div class="News large-offset-3  columns">
+<form action="/profile/update/" method="post">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" class="button" value="Update">
+    {% if update_error %}
+       <label class="TagHref">{{ creation_error }}</label>
+    {% endif %}
+</form>
+</div>
+{% endblock %}

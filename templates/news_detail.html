@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block news %}
+    <div class="News">
+    <h2>{{ news.heading}}</h2>
+    {% load static %}
+        {%for paragraph in paragraphs%}
+           <p>{{paragraph.paragraph  }}</p>
+            {% if  paragraph.image  %}
+            <img src="{% static paragraph.image.url %}" />
+            {% endif %}
+            <p>{{ paragraph.image_description }}</p>
+        {% endfor %}
+
+        <p>
+        Published {{ news.published_time }} by {{news.author}}
+        </p>
+
+        <div class="Comments_Tags">
+        <p class="tags">Tags:</p>
+
+
+        {% for tag in tags %}
+
+        <a class ="TagHref" href="http://127.0.0.1:8000/news_with_tag/{{ tag.tag }}/">{{ tag.tag }}</a>
+        {% endfor %}
+        <p></p>
+        {% if comments %}
+            <p class="tags">Comments:</p>
+        {% endif %}
+        {% for comment in comments %}
+            <div class="News">
+                {{  comment.body }}
+                <p></p>
+                Published {{  comment.published_time }} by <a href="http://127.0.0.1:8000/profile/{{ comment.comments_user }}/">
+                {{ comment.comments_user }}</a>
+            </div>
+            <p></p>
+        {% endfor %}
+        {% if username%}
+            <a class="AddCommentHref" href="http://127.0.0.1:8000/add/comment/{{ news.slug }}/">Add comment</a>
+        {% else %}
+            <p class="Message">Please <a href="http://127.0.0.1:8000/auth/login/">log in</a> to add comments.</p>
+        {% endif %}
+		</div>
+{% endblock %}

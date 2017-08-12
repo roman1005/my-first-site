@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block news %}
+<div class="News">
+<form action="/add/comment/{{ news }}/" method="post">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" class="button" value="Add comment">
+    {% if creation_error %}
+       <label class="TagHref">{{ creation_error }}</label>
+    {% endif %}
+    </form>
+</div>
+{% endblock %}
