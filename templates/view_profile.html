@@ -26,13 +26,13 @@
 <p class="TagHref">{{  profile.Hobbies }}</p>
 {% else %}
   {% if host_user %}
-      <p class="News">You haven't <a href="http://127.0.0.1:8000/profile/create/">created</a> the profile.</p>
+      <p class="News">You haven't <a href="defiantoad.pythonanywhere.com/profile/create/">created</a> the profile.</p>
   {% else %}
       <p class="News">This user haven't already created the profile</p>
   {% endif %}
 {% endif %}
 {% if profile and host_user %}
-   <a href="http://127.0.0.1:8000/profile/update/" class="News">Update</a>
+   <a href="defiantoad.pythonanywhere.com/profile/update/" class="News">Update</a>
 {% endif %}
 </div>
 {% endblock %}

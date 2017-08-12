@@ -13,40 +13,40 @@
 <div class="top-bar">
 <ul class="right">
 {% if username %}
-    <a  href="http://127.0.0.1:8000/auth/logout/">Log Out({{ username }})</a>
-    <a href="http://127.0.0.1:8000/profile/{{ username }}/">My profile</a>
+    <a  href="defiantoad.pythonanywhere.com/auth/logout/">Log Out({{ username }})</a>
+    <a href="defiantoad.pythonanywhere.com/profile/{{ username }}/">My profile</a>
 {% else %}
-    <a class="Href" href="http://127.0.0.1:8000/auth/login/">Log In</a>
+    <a class="Href" href="defiantoad.pythonanywhere.com/auth/login/">Log In</a>
     <p></p>
-    <a class="Href" href="http://127.0.0.1:8000/auth/register/">Register</a>
+    <a class="Href" href="defiantoad.pythonanywhere.com/auth/register/">Register</a>
 
 {%endif%}
 </ul>
 </div>
 <div class="Panel">
 <h1>
-    <a class="Href" href="http://127.0.0.1:8000">
+    <a class="Href" href="defiantoad.pythonanywhere.com">
         NewsOne
     </a>
 </h1>
-<a  class ="Href" href="http://127.0.0.1:8000/home/">
+<a  class ="Href" href="defiantoad.pythonanywhere.com/home/">
 <div class="InteractivePanel">
 Home
 </div>
 </a>
-<a  class ="Href" href="http://127.0.0.1:8000/all/">
-<div class="InteractivePanel">
+<a  class ="Href" href="defiantoad.pythonanywhere.com/all/">
+<div class="defiantoad.pythonanywhere.com">
 All
 </div>
 {% if C_M %}
-<a  class ="Href" href="http://127.0.0.1:8000/admin/">
+<a  class ="Href" href="defiantoad.pythonanywhere.com/admin/">
 <div class="InteractivePanel">
 Admin
 </div>
 </a>
 {% endif %}
 {% for department in departments %}
-    <a  class ="Href" href="http://127.0.0.1:8000/department={{ department }}/">
+    <a  class ="Href" href="defiantoad.pythonanywhere.com/department={{ department }}/">
 <div class="InteractivePanel">
 {{ department }}
 </div>

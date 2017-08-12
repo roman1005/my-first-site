@@ -21,7 +21,7 @@
 
         {% for tag in tags %}
 
-        <a class ="TagHref" href="http://127.0.0.1:8000/news_with_tag/{{ tag.tag }}/">{{ tag.tag }}</a>
+        <a class ="TagHref" href="defiantoad.pythonanywhere.com/news_with_tag/{{ tag.tag }}/">{{ tag.tag }}</a>
         {% endfor %}
         <p></p>
         {% if comments %}
@@ -31,15 +31,15 @@
             <div class="News">
                 {{  comment.body }}
                 <p></p>
-                Published {{  comment.published_time }} by <a href="http://127.0.0.1:8000/profile/{{ comment.comments_user }}/">
+                Published {{  comment.published_time }} by <a href="defiantoad.pythonanywhere.com/profile/{{ comment.comments_user }}/">
                 {{ comment.comments_user }}</a>
             </div>
             <p></p>
         {% endfor %}
         {% if username%}
-            <a class="AddCommentHref" href="http://127.0.0.1:8000/add/comment/{{ news.slug }}/">Add comment</a>
+            <a class="AddCommentHref" href="defiantoad.pythonanywhere.com/add/comment/{{ news.slug }}/">Add comment</a>
         {% else %}
-            <p class="Message">Please <a href="http://127.0.0.1:8000/auth/login/">log in</a> to add comments.</p>
+            <p class="Message">Please <a href="defiantoad.pythonanywhere.com/auth/login/">log in</a> to add comments.</p>
         {% endif %}
 		</div>
 {% endblock %}
