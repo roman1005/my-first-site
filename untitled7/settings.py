@@ -25,7 +25,7 @@ SECRET_KEY = '!xg@=c%sq7&z^iiuay4-%j&f*1y^6$j%!nga!vsuu5d3s5c#02'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['opalcolonel.pythonanywhere.com','127.0.0.1',]
+ALLOWED_HOSTS = ['*',]
 
 
 # Application definition
