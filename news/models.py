@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 
 
 class News(models.Model):
-    author = models.ForeignKey(User)
+    author = models.ForeignKey(User, models.deletion.CASCADE)
     heading = models.CharField(max_length=100)
     slug = models.CharField(max_length=100)
     STATUS_CHOICES = (
@@ -24,7 +24,7 @@ class Paragraph(models.Model):
             paragraph = models.TextField(max_length=20000, null=True, blank=True)
             image = models.ImageField(upload_to='images/', null=True, blank=True)
             image_description = models.CharField(max_length=200, null=True, blank=True)
-            news_paragraph = models.ForeignKey("News")
+            news_paragraph = models.ForeignKey("News", models.deletion.CASCADE)
 
 
 class Tag(models.Model):
@@ -32,14 +32,14 @@ class Tag(models.Model):
             db_table = 'tags'
 
         tag = models.CharField(max_length=120, default='')
-        news_tag = models.ForeignKey("News")
+        news_tag = models.ForeignKey("News", models.deletion.CASCADE)
 
 
 class Comment(models.Model):
-    comments_news=models.ForeignKey(News)
+    comments_news=models.ForeignKey(News, models.deletion.CASCADE)
     published_time = models.DateTimeField()
     body=models.TextField()
-    comments_user=models.ForeignKey(User)
+    comments_user=models.ForeignKey(User, models.deletion.CASCADE)
 
     class Meta():
         ordering=('-published_time',)

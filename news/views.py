@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404, redirect, render_to_response
+from django.shortcuts import render, get_object_or_404, redirect
 from news.models import News, Paragraph, Tag, Comment
 from news.forms import CommentForm
 from django.template.context_processors import csrf
@@ -15,89 +15,89 @@ def is_CM(user):
 def home(request):
    all=News.objects.all()
    news=all[:5]
-   args={}
-   args['username'] = auth.get_user(request).username
-   if (args['username']):
+   context={}
+   context['username'] = auth.get_user(request).username
+   if (context['username']):
        user = User.objects.get(username=auth.get_user(request).username)
-       args['C_M'] = is_CM(user)
+       context['C_M'] = is_CM(user)
    else:
-       args['C_M'] = None
-   args['username']=auth.get_user(request).username
-   args['news']=news
-   args['departments'] = departments
-   return render(request, 'news_list.html', args)
+       context['C_M'] = None
+   context['username']=auth.get_user(request).username
+   context['news']=news
+   context['departments'] = departments
+   return render(request, 'news_list.html', context)
 
 
 def news_list(request):
     news=News.objects.all()
-    args={}
-    args['username'] = auth.get_user(request).username
-    if (args['username']):
+    context={}
+    context['username'] = auth.get_user(request).username
+    if (context['username']):
         user = User.objects.get(username=auth.get_user(request).username)
-        args['C_M'] = is_CM(user)
+        context['C_M'] = is_CM(user)
     else:
-        args['C_M'] = None
-    args['username'] = auth.get_user(request).username
-    args['news']=news
-    args['departments']=departments
-    return render(request,'news_list.html', args )
+        context['C_M'] = None
+    context['username'] = auth.get_user(request).username
+    context['news']=news
+    context['departments']=departments
+    return render(request,'news_list.html', context )
 
 
 def department_list(request,department):
-    args={}
-    args['username'] = auth.get_user(request).username
-    if (args['username']):
+    context={}
+    context['username'] = auth.get_user(request).username
+    if (context['username']):
         user = User.objects.get(username=auth.get_user(request).username)
-        args['C_M'] = is_CM(user)
+        context['C_M'] = is_CM(user)
     else:
-        args['C_M'] = None
-    args['username'] = auth.get_user(request).username
+        context['C_M'] = None
+    context['username'] = auth.get_user(request).username
     news=News.objects.filter(department=department)
-    args['news']=news
-    args['departments'] = departments
-    return render(request,'news_list.html', args)
+    context['news']=news
+    context['departments'] = departments
+    return render(request,'news_list.html', context)
 
 
 def news_detail(request, news):
-    args={}
+    context={}
     news= get_object_or_404(News, slug=news)
-    args['news']=news
-    args['username'] = auth.get_user(request).username
-    if (args['username']):
+    context['news']=news
+    context['username'] = auth.get_user(request).username
+    if (context['username']):
         user = User.objects.get(username=auth.get_user(request).username)
-        args['C_M'] = is_CM(user)
+        context['C_M'] = is_CM(user)
     else:
-        args['C_M'] = None
-    args.update(csrf(request))
+        context['C_M'] = None
+    context.update(csrf(request))
     paragraphs = Paragraph.objects.filter(news_paragraph_id=news.id)
     comments=Comment.objects.filter(comments_news_id=news.id)
-    args['comments'] = comments
-    args['paragraphs'] = paragraphs
-    args['tags'] = Tag.objects.filter(news_tag_id=news.id)
-    args['departments']=departments
-    return render(request, 'news_detail.html', args)
+    context['comments'] = comments
+    context['paragraphs'] = paragraphs
+    context['tags'] = Tag.objects.filter(news_tag_id=news.id)
+    context['departments']=departments
+    return render(request, 'news_detail.html', context)
 
 
 def general_tags_news(request, tag):
-    args={}
-    args['username'] = auth.get_user(request).username
-    if (args['username']):
+    context={}
+    context['username'] = auth.get_user(request).username
+    if (context['username']):
         user = User.objects.get(username=auth.get_user(request).username)
-        args['C_M'] = is_CM(user)
+        context['C_M'] = is_CM(user)
     else:
-        args['C_M'] = None
+        context['C_M'] = None
     news=list()
     for i in range(0,len(Tag.objects.filter(tag=tag))):
         k=News.objects.get(id=Tag.objects.filter(tag=tag)[i].news_tag_id)
         news.append(k)
-    args['departments']=departments
-    args['news']=news
-    return render(request,'news_list.html', args)
+    context['departments']=departments
+    context['news']=news
+    return render(request,'news_list.html', context)
 
 
 def add_comment(request, news):
-    args={}
-    args.update(csrf(request))
+    context={}
+    context.update(csrf(request))
     if request.POST:
         form=CommentForm(request.POST)
         new=News.objects.get(slug=news)
@@ -110,24 +110,24 @@ def add_comment(request, news):
             return redirect('/news/'+news+'/')
         else:
             form = CommentForm()
-            args['form']=form
-            args['creation_error']="Invalid information was entered."
-            return render_to_response('add_comment.html',args)
+            context['form']=form
+            context['creation_error']="Invalid information was entered."
+            return render(request,'add_comment.html',context)
     else:
-        args['username'] = auth.get_user(request).username
-        if (args['username']):
+        context['username'] = auth.get_user(request).username
+        if (context['username']):
             user = User.objects.get(username=auth.get_user(request).username)
-            args['C_M'] = is_CM(user)
+            context['C_M'] = is_CM(user)
         else:
-            args['C_M'] = None
-        args['form'] = CommentForm()
-        args['news'] = news
-        args['departments']=departments
-        return render(request, 'add_comment.html', args)
+            context['C_M'] = None
+        context['form'] = CommentForm()
+        context['news'] = news
+        context['departments']=departments
+        return render(request, 'add_comment.html', context)
 
 def success_reg(request):
-    args = {}
-    args['username'] = ''
-    args['departments']=departments
-    return render(request,'succes_reg.html', args)
+    context = {}
+    context['username'] = ''
+    context['departments']=departments
+    return render(request,'succes_reg.html', context)
 # Create your views here.

@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404, redirect, render_to_response
+from django.shortcuts import render, get_object_or_404, redirect
 from .forms import ProfileForm
 from .models import UserHomePage
 from django.contrib import auth
@@ -8,11 +8,11 @@ from django.template.context_processors import csrf
 from news.views import  is_CM
 
 def create_profile(request):
-    args={}
-    args.update(csrf(request))
-    args['departments']=News.departments
+    context={}
+    context.update(csrf(request))
+    context['departments']=News.departments
     username = auth.get_user(request).username
-    args['username']=username
+    context['username']=username
     if request.POST:
         form=ProfileForm(request.POST)
         if form.is_valid():
@@ -21,30 +21,30 @@ def create_profile(request):
             profile.save()
             return redirect('/profile/' + username + '/')
         else:
-            if (args['username']):
+            if (context['username']):
                 user = User.objects.get(username=auth.get_user(request).username)
-                args['C_M'] = is_CM(user)
+                context['C_M'] = is_CM(user)
             else:
-                args['C_M'] = None
-            args['form']=ProfileForm()
-            args['creation_error']="Invalid data was entered."
-            return render_to_response('profile_create.html', args)
+                context['C_M'] = None
+            context['form']=ProfileForm()
+            context['creation_error']="Invalid data was entered."
+            return render(request,'profile_create.html', context)
     else:
-        if (args['username']):
+        if (context['username']):
             user = User.objects.get(username=auth.get_user(request).username)
-            args['C_M'] = is_CM(user)
+            context['C_M'] = is_CM(user)
         else:
-            args['C_M'] = None
-        args['form']=ProfileForm()
-        return render(request, 'profile_create.html', args)
+            context['C_M'] = None
+        context['form']=ProfileForm()
+        return render(request, 'profile_create.html', context)
 
 
 def update_profile(request):
-    args={}
-    args['departments'] = News.departments
-    args.update(csrf(request))
+    context={}
+    context['departments'] = News.departments
+    context.update(csrf(request))
     username = auth.get_user(request).username
-    args['username'] = username
+    context['username'] = username
     if UserHomePage.objects.filter(user_id=User.objects.get(username=username)).exists():
         profile=UserHomePage.objects.get(user_id=User.objects.get(username=username))
     form = ProfileForm(request.POST or None,
@@ -56,26 +56,26 @@ def update_profile(request):
            profile.save()
            return redirect('/profile/'+username+'/')
         else:
-            if (args['username']):
+            if (context['username']):
                 user = User.objects.get(username=auth.get_user(request).username)
-                args['C_M'] = is_CM(user)
+                context['C_M'] = is_CM(user)
             else:
-                args['C_M'] = None
-            args['update_error']="Invalid data entered."
-            args['form']=form
-            return render_to_response( 'profile_update.html', args)
+                context['C_M'] = None
+            context['update_error']="Invalid data entered."
+            context['form']=form
+            return render( 'profile_update.html', context)
     else:
-        if (args['username']):
+        if (context['username']):
             user = User.objects.get(username=auth.get_user(request).username)
-            args['C_M'] = is_CM(user)
+            context['C_M'] = is_CM(user)
         else:
-            args['C_M'] = None
-        args['form'] = form
-        return render(request, 'profile_update.html', args)
+            context['C_M'] = None
+        context['form'] = form
+        return render(request, 'profile_update.html', context)
 
 
 def view_profile(request, username):
-    args={}
+    context={}
     profile_user=User.objects.get(username=username)
     if auth.get_user(request).username!=username:
         host_user=None
@@ -87,15 +87,15 @@ def view_profile(request, username):
     else:
         profile=None
     if profile is not None:
-        args['profile']=profile
-    args['host_user']=host_user
-    args['username']=username
-    args['departments']=News.departments
-    args['username']=auth.get_user(request)
-    if (args['username']):
+        context['profile']=profile
+    context['host_user']=host_user
+    context['username']=username
+    context['departments']=News.departments
+    context['username']=auth.get_user(request)
+    if (context['username']):
         user = User.objects.get(username=auth.get_user(request).username)
-        args['C_M'] = is_CM(user)
+        context['C_M'] = is_CM(user)
     else:
-        args['C_M'] = None
-    return render_to_response('view_profile.html', args)
+        context['C_M'] = None
+    return render(request,'view_profile.html', context)
 # Create your views here.
