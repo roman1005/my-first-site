@@ -15,6 +15,7 @@ class News(models.Model):
     class Meta():
         get_latest_by = 'published_time'
         ordering=('-published_time',)
+        verbose_name = "New"
 
 
 class Paragraph(models.Model):
